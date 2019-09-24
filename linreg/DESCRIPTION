@@ -1,8 +1,8 @@
-Package: luckylab2.0
+Package: linreg
 Type: Package
-Title: A linear regression package
+Title: Class A linreg object
 Version: 1.0
-Date: 2019-09-20
+Date: 2019-09-25
 Author: Weng Hang Wong, Bjorn Hansen, Mahbuba Haque
 Maintainer: Mecon to <wenwo535@student.liu.se>
 Description: This package handles linear regression models. It is an object oriented system that handles special functions such as print(), plot(), resid(), pred(), coef() and summary().
