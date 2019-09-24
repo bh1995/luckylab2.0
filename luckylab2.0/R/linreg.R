@@ -60,13 +60,32 @@ R <- QR(X)[[2]]
 
 output <- multreg(Q, R, y)
 
-
 coeff <- c(output[[1]])
 names(coeff) <- colnames(X)
 reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]])
-names(reg) <- c("formula","coefficients","ritted values","residuals","variance coeff","t-values","p-values","df")
+names(reg) <- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df")
 class(reg) <- "linreg" 
 return(reg)
 
 }
 
+resid <- function(x){UseMethod("resid",x)}
+
+#' @export
+resid.linreg <- function(x){
+  return(x$residuals)
+}
+
+pred <- function(x){UseMethod("pred",x)}
+
+#' @export
+pred.linreg <- function(x){
+  return(x$fitted)
+}
+
+coef <- function(x){UseMethod("coef",x)}
+
+#' @export
+coef.linreg <- function(x){
+  return(x$coefficients)
+}
