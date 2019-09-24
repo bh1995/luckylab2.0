@@ -6,5 +6,5 @@ Date: 2019-09-25
 Author: Weng Hang Wong, Bjorn Hansen, Mahbuba Haque
 Maintainer: Mecon to <wenwo535@student.liu.se>
 Description: This package handles linear regression models. It is an object oriented system that handles special functions such as print(), plot(), resid(), pred(), coef() and summary().
-License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+License: GPL-3
 RoxygenNote: 6.1.1
