@@ -6,8 +6,8 @@
 #' @export
 #' 
 linreg <- function(formula, data){
-  X<- model.matrix(formula,data)
-  y<- data[,all.vars(formula)[1]]
+  X <- model.matrix(formula,data)
+  y <- data[,all.vars(formula)[1]]
   
   #QR decomposition
   QR <- function(X){
@@ -42,7 +42,9 @@ linreg <- function(formula, data){
     return(list(Q,R))
   }
   
-  
+Q <- QR(X)[[1]]  
+R <- QR(X)[[2]]
+
   multreg <- function(Q, R, y){
       b <- (solve(R)) %*% t(Q) %*% y
       fitted <- Q%*%R%*%b
@@ -52,9 +54,19 @@ linreg <- function(formula, data){
       varb <- solve(t(R)%*%R) * as.numeric(residvar)
       t <- b/sqrt(diag(varb))
       pval <- 1-pt(t,df)
-  
-    
-      
-      
+      return(list(b, fitted, resid, df, residvar, varb, t, pval))
   }
+
+
+output <- multreg(Q, R, y)
+
+
+coeff <- c(output[[1]])
+names(coeff) <- colnames(X)
+reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]])
+names(reg) <- c("formula","coefficients","ritted values","residuals","variance coeff","t-values","p-values","df")
+class(reg) <- "linreg" 
+return(reg)
+
 }
+
