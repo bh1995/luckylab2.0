@@ -1,0 +1,3 @@
+language: r
+cache: packages
+before_install: cd luckpack
