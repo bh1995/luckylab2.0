@@ -7,10 +7,10 @@
 QR(X)
 }
 \arguments{
-\item{X}{is a matrix consisting of which variables should regressed on}
+\item{X}{is a matrix for which the Q and the R matrix will be calculated from}
 }
 \value{
-The regression variables coefficients are returned
+The Q and R matrix where R is triangular
 }
 \description{
 QR method

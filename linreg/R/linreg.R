@@ -89,3 +89,5 @@ coef <- function(x){UseMethod("coef",x)}
 coef.linreg <- function(x){
   return(x$coefficients)
 }
+
+

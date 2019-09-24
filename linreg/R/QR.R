@@ -1,7 +1,7 @@
 #' QR method
 #' 
-#' @param X is a matrix consisting of which variables should regressed on
-#' @return The regression variables coefficients are returned
+#' @param X is a matrix for which the Q and the R matrix will be calculated from
+#' @return The Q and R matrix where R is triangular
 #' @examples
 #' 
 #' @export
@@ -15,7 +15,7 @@ QR <- function(X){
     if (dim(X)[2]>1){
       for (j in 1:(dim(X)[2]-1)){
         if (j+1>i) {break}
-        U[,i] <- U[,i] - as.numeric(t(U[,j])%*%X[,i]/t(U[,j])%*%U[,j])*U[,j]
+        U[,i] <- U[,i] - all.vars(t(U[,j])%*%X[,i]/t(U[,j])%*%U[,j])*U[,j]
       }
     }
   }
