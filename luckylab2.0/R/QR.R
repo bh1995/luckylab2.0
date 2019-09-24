@@ -1,3 +1,10 @@
+#' QR method
+#' 
+#' @param X is a matrix consisting of which variables should regressed on
+#' @return The regression variables coefficients are returned
+#' @examples
+#' 
+#' @export
 QR <- function(X){
   # Empty U matrix
   U <- matrix(0,dim(X)[1],dim(X)[2])

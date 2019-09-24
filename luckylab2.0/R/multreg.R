@@ -1,4 +1,12 @@
-
+#' Regression
+#' 
+#' @param Q is matrix formed via QR decomposition
+#' @param R is a triangular matrix formed via QR decomposition
+#' @param y is the variable that is to be regressed on 
+#' @return list of the calculated coefficients
+#' @examples
+#' 
+#' @export
 multreg <- function(Q, R, y){
   b <- (solve(R)) %*% t(Q) %*% y
   fitted <- Q%*%R%*%b
