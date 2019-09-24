@@ -1,0 +1,61 @@
+---
+title: "Linear Regression"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(linreg)
+```
+
+## Linear Regression Package
+This is a R package of implementing Linear Regression with the methods below: 
+:print
+:plot
+:pred
+:coef
+:resid
+:summary
+
+
+## Let's start
+
+1. Download the package "devtools::install_github ("bh1995/luckylab2.0/linreg")
+
+2. The function called
+linreg() and have the two arguments "formula" and "data", e.g. formula =Petal.Length~Species, data = iris
+
+3. Then store the function into a variable(e.g. regmodel <- linreg(formula, data) )
+
+4. It will be what it looks like:
+## print(regmodel)
+```
+```
+## plot(regmodel)
+```
+```
+## pred(regmodel)
+```
+```
+## coef(regmodel)
+```
+```
+## resid(regmodel)
+```
+```
+## summary(regmodel)
+```
+```
+
+
+
