@@ -61,15 +61,42 @@ linreg <- function(formula, data){
   
   coeff <- c(output[[1]])
   names(coeff) <- colnames(X)
-  reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]])
-  names(reg) <- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df")
+  
+  dataname <- deparse(substitute(data))
+  
+  reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname)
+  names(reg) <- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname")
   class(reg) <- "linreg" 
   return(reg)
 }
 
+#' Print
+#'
+#' \code{print.linreg} print out the coefficients and coefficient names
+#'
+#' This function returns the coefficients and coefficient names stored in 
+#' an S3 object of class linreg.
+#'
+#' @export
+#' @param x An object of class linreg containing a linear regression.
+#' @return the coefficients and coefficient names
+print <- function(x){UseMethod("print",x)}
+#' @export
+print.linreg <- function(x,...){
+  a <- as.character(x$dataname)
+  b <- as.character(x$formula)
+  
+  cat("Call:\n", "linreg(",b[2],b[1],b[3], ")",",","data =", a, "\n\n","Coefficients:\n" )
+  x$coefficients
+}
+
+# test <- linreg(formula, iris) <- must enter "iris" instead of "data"
+
+
+
 #' Residuals
 #'
-#' \code{plot.linreg} Returns the vector of residuals from a linear regression model.
+#' \code{print.linreg} print out the coefficients and coefficient names similar
 #'
 #' This function returns the vector of residuals from a linear regression stored in 
 #' an S3 object of class linreg.
@@ -79,7 +106,7 @@ linreg <- function(formula, data){
 #' @return A numeric vector of residuals. 
 resid <- function(x){UseMethod("resid",x)}
 #' @export
-resid.linreg <- function(x){
+resid.linreg <- function(x,...){
   return(x$residuals)
 }
 
@@ -96,7 +123,7 @@ resid.linreg <- function(x){
 #' @return A numeric vector of predicted values.
 pred <- function(x){UseMethod("pred",x)}
 #' @export
-pred.linreg <- function(x){
+pred.linreg <- function(x,...){
   return(x$fitted)
 }
 
@@ -113,7 +140,7 @@ pred.linreg <- function(x){
 #' @return A numeric vector of coefficients.
 coef <- function(x){UseMethod("coef",x)}
 #' @export
-coef.linreg <- function(x){
+coef.linreg <- function(x,...){
   return(x$coefficients)
 }
 
