@@ -75,17 +75,16 @@ linreg <- function(formula, data){
 #' \code{print.linreg} print out the coefficients and coefficient names
 #'
 #' This function returns the coefficients and coefficient names stored in 
-#' an S3 object of class linreg.
+#' the object linreg of S3 class.
 #'
 #' @export
-#' @param x An object of class linreg containing a linear regression.
+#' @param x A class object of Linear Regression
 #' @return the coefficients and coefficient names
 print <- function(x){UseMethod("print",x)}
 #' @export
 print.linreg <- function(x,...){
   a <- as.character(x$dataname)
   b <- as.character(x$formula)
-  
   cat("Call:\n", "linreg(",b[2],b[1],b[3], ")",",","data =", a, "\n\n","Coefficients:\n" )
   x$coefficients
 }
@@ -96,14 +95,14 @@ print.linreg <- function(x,...){
 
 #' Residuals
 #'
-#' \code{print.linreg} print out the coefficients and coefficient names similar
+#' \code{resid.linreg} return the vector of residuals e
 #'
-#' This function returns the vector of residuals from a linear regression stored in 
-#' an S3 object of class linreg.
+#' This function returns the vector of residuals e stored in 
+#' the object linreg of S3 class.
 #'
 #' @export
-#' @param x An object of class linreg containing a linear regression.
-#' @return A numeric vector of residuals. 
+#' @param x A class object of Linear Regression
+#' @return the vector of residuals e
 resid <- function(x){UseMethod("resid",x)}
 #' @export
 resid.linreg <- function(x,...){
@@ -113,14 +112,14 @@ resid.linreg <- function(x,...){
 
 #' Fitted values
 #'
-#' \code{plot.linreg} Returns predicted values from a linear regression model.
+#' \code{pred.linreg} Returns the predicted values yhat
 #'
-#' This function returns the predicted values of a linear regression stored in 
-#' an S3 object of class linreg.
+#' This function returns  the predicted values y stored in 
+#' the object linreg of S3 class.
 #'
 #' @export
-#' @param x An object of class linreg containing a linear regression.
-#' @return A numeric vector of predicted values.
+#' @param x  A class object of Linear Regression
+#' @return A predicted values yhat.
 pred <- function(x){UseMethod("pred",x)}
 #' @export
 pred.linreg <- function(x,...){
@@ -130,14 +129,14 @@ pred.linreg <- function(x,...){
 
 #' Regression coefficients
 #'
-#' \code{plot.linreg} Returns coefficients from a linear regression model.
+#' \code{coef.linreg} Returns the coefficients as a named vector.
 #'
-#' This function returns the coefficients of a linear regression stored in 
-#' an S3 object of class linreg.
+#' This function returns the the coefficients as a named vector stored in 
+#' the object linreg of S3 class.
 #'
 #' @export
-#' @param x An object of class linreg containing a linear regression.
-#' @return A numeric vector of coefficients.
+#' @param x A class object of Linear Regression
+#' @return A coefficients as a named vector
 coef <- function(x){UseMethod("coef",x)}
 #' @export
 coef.linreg <- function(x,...){
