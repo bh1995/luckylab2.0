@@ -1,8 +1,8 @@
 #' Linear Regression.
 #' 
-#' @param formula A object of class "formula".
-#' @param data A data frame.
-#' @return An S3 object of class linreg.
+#' @param formula A formula that containing the variables of given dataframe .
+#' @param data A dataframe.
+#' @return An linreg object of Linear regression in s3 class.
 #' @export
 #' 
 linreg <- function(formula, data){
@@ -61,9 +61,7 @@ linreg <- function(formula, data){
   
   coeff <- c(output[[1]])
   names(coeff) <- colnames(X)
-  
-  dataname <- deparse(substitute(data))
-  
+  dataname <- deparse(substitute(data)) #for the print methods
   reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname)
   names(reg) <- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname")
   class(reg) <- "linreg" 
@@ -88,8 +86,7 @@ print.linreg <- function(x,...){
   cat("Call:\n", "linreg(",b[2],b[1],b[3], ")",",","data =", a, "\n\n","Coefficients:\n" )
   x$coefficients
 }
-
-# test <- linreg(formula, iris) <- must enter "iris" instead of "data"
+# ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 
 
 
