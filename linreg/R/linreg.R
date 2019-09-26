@@ -8,11 +8,11 @@
 linreg <- function(formula, data){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
-  
+  n <- length(y)
   #QR decomposition
-  QR <- function(X){
+  QR <<- function(X){
     # Empty U matrix
-    U <- matrix(0,dim(X)[1],dim(X)[2])
+    U <<- matrix(0,dim(X)[1],dim(X)[2])
     
     # Fill U matrix
     for (i in 1:(dim(X)[2])){
@@ -26,10 +26,10 @@ linreg <- function(formula, data){
     }
     
     # Calculate the e-values and put them in the Q matrix.
-    Q <- apply(U, 2, function(x)(x/sqrt((sum(x^2)))))
+    Q <<- apply(U, 2, function(x)(x/sqrt((sum(x^2)))))
     
     # Empty R matrix
-    R <- matrix(0,dim(X)[2],dim(X)[2])
+    R <<- matrix(0,dim(X)[2],dim(X)[2])
     
     # Fill R matrix
     for (i in 1:(dim(X)[2])){
@@ -57,16 +57,26 @@ linreg <- function(formula, data){
       return(list(b, fitted, resid, df, residvar, varb, t, pval))
   }
   
-  output <- multreg(Q, R, y)
+  output <<- multreg(Q, R, y)
   
-  coeff <- c(output[[1]])
-  names(coeff) <- colnames(X)
+  coeff <<- c(output[[1]])
+  names(coeff) <<- colnames(X)
   dataname <- deparse(substitute(data)) #for the print methods
-  reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname)
-  names(reg) <- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname")
-  class(reg) <- "linreg" 
+  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X)
+  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X")
+  class(reg) <<- "linreg" 
   return(reg)
 }
+
+#' Regression summary
+#'
+#' \code{plot.linreg} Outouts a summary of the calculated results from the regression model
+#'
+#' @export
+#' @param x Which is an object of class linreg
+#' @return summary of calculated values
+summary <- function(x){UseMethod("summary",x)}
+
 
 #' Print
 #'
@@ -78,13 +88,24 @@ linreg <- function(formula, data){
 #' @export
 #' @param x A class object of Linear Regression
 #' @return the coefficients and coefficient names
-print <- function(x){UseMethod("print",x)}
+print <- function(a){UseMethod("print",a)}
 #' @export
+
 print.linreg <- function(x,...){
-  a <- as.character(x$dataname)
-  b <- as.character(x$formula)
-  cat("Call:\n", "linreg(",b[2],b[1],b[3], ")",",","data =", a, "\n\n","Coefficients:\n" )
+  a <<- as.character(x$dataname)
+  b <<- as.character(x$formula)
+  printformula <- function(x){
+    
+    return(x$formula)
+    
+  }
+  c <- printformula(x)
+  cat("Call:\n", "linreg(", c )
+  
+  cat( ")",",","data =", a, "\n\n","Coefficients:\n" )
+  
   x$coefficients
+  
 }
 # ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 
@@ -139,5 +160,7 @@ coef <- function(x){UseMethod("coef",x)}
 coef.linreg <- function(x,...){
   return(x$coefficients)
 }
+
+
 
 

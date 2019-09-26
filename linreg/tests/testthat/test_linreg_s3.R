@@ -16,12 +16,12 @@ test_that("class is correct", {
   expect_s3_class(linreg_mod, "linreg")
 })
 
-# test_that("print() works", {
-#   linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-#   
-#   expect_output(print(linreg_mod),"linreg\\(formula = Petal\\.Length ~ Sepal\\.Width \\+ Sepal\\.Length, data = iris\\)")
-#   expect_output(print(linreg_mod),"( )*\\(Intercept\\)( )*Sepal\\.Width( )*Sepal\\.Length")
-# })
+test_that("print() works", {
+linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+
+  expect_output(print(linreg_mod),"linreg\\(formula = Petal\\.Length ~ Sepal\\.Width \\+ Sepal\\.Length, data = iris\\)")
+  expect_output(print(linreg_mod),"( )*\\(Intercept\\)( )*Sepal\\.Width( )*Sepal\\.Length")
+})
 
 test_that("pred() works", {
   linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
