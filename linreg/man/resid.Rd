@@ -7,15 +7,15 @@
 resid(x)
 }
 \arguments{
-\item{x}{An object of class linreg contanining a linear regression.}
+\item{x}{A class object of Linear Regression}
 }
 \value{
-A numeric vector of residuals
+the vector of residuals e
 }
 \description{
-\code{plot.linreg} Generate residual plots of a linear regression model
+\code{resid.linreg} return the vector of residuals e
 }
 \details{
-This function returns a vector of residuals from a linear regression stored in 
-an S3 object of class linreg.
+This function returns the vector of residuals e stored in 
+the object linreg of S3 class.
 }
