@@ -2,18 +2,18 @@
 % Please edit documentation in R/linreg.R
 \name{linreg}
 \alias{linreg}
-\title{QR decoposition linear Regression.}
+\title{Linear Regression.}
 \usage{
 linreg(formula, data)
 }
 \arguments{
-\item{formula}{A variable containing in the dataframe.}
+\item{formula}{A formula that containing the variables of given dataframe .}
 
-\item{data}{A data frame}
+\item{data}{A dataframe.}
 }
 \value{
-An S3 object of class linreg with QR decoposition
+An linreg object of Linear regression in s3 class.
 }
 \description{
-QR decoposition linear Regression.
+Linear Regression.
 }

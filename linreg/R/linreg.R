@@ -61,6 +61,7 @@ linreg <- function(formula, data){
   
   coeff <- c(output[[1]])
   names(coeff) <- colnames(X)
+  
   dataname <- deparse(substitute(data)) #for the print methods
   reg <- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname)
   names(reg) <- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname")
@@ -82,9 +83,9 @@ print <- function(x){UseMethod("print",x)}
 #' @export
 print.linreg <- function(x,...){
   a <- as.character(x$dataname)
-  b <- as.character(x$formula)
-  cat("Call:\n", "linreg(",b[2],b[1],b[3], ")",",","data =", a, "\n\n","Coefficients:\n" )
-  x$coefficients
+  b <- format(x$formula)
+  cat("Call:\n", "linreg(formula = ", b,","," data = ", a, ")","\n\n","Coefficients:\n", sep="" )
+  round(x$coefficients, digits=2)
 }
 # ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 

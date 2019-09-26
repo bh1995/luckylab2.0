@@ -7,15 +7,15 @@
 pred(x)
 }
 \arguments{
-\item{x}{An object of class linreg contanining a linear regression.}
+\item{x}{A class object of Linear Regression}
 }
 \value{
-A numeric vector of fitted values
+A predicted values yhat.
 }
 \description{
-\code{plot.linreg} Return fitted values from a linear regression model
+\code{pred.linreg} Returns the predicted values yhat
 }
 \details{
-This function returns the fitted values of a linear regression stored in 
-an S3 object of class linreg.
+This function returns  the predicted values y stored in 
+the object linreg of S3 class.
 }

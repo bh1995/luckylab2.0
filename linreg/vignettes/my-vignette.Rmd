@@ -38,6 +38,7 @@ linreg() and have the two arguments "formula" and "data", e.g. formula =Petal.Le
 3. Then store the function into a variable(e.g. regmodel <- linreg(formula, data) )
 
 4. It will be what it looks like:
+
 ## print(regmodel)
 ```
 ```
