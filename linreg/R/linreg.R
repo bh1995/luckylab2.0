@@ -59,14 +59,12 @@ linreg <- function(formula, data){
   
   output <<- multreg(Q, R, y)
   
-<<<<<<< HEAD
+
   coeff <<- c(output[[1]])
   names(coeff) <<- colnames(X)
-=======
   coeff <- c(output[[1]])
   names(coeff) <- colnames(X)
   
->>>>>>> e0c65301aa25a8bff975b340939a4eb2e24b57b3
   dataname <- deparse(substitute(data)) #for the print methods
   reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X)
   names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X")
@@ -92,39 +90,30 @@ summary <- function(x){UseMethod("summary",x)}
 #' the object linreg of S3 class.
 #'
 #' @export
-<<<<<<< HEAD
 #' @param x A class object of Linear Regression
-#' @return the coefficients and coefficient names
-print <- function(a){UseMethod("print",a)}
-=======
-#' @param x An object of class linreg.
 #' @return The coefficients and coefficient names.
 print <- function(x){UseMethod("print",x)}
->>>>>>> e0c65301aa25a8bff975b340939a4eb2e24b57b3
 #' @export
-
-print.linreg <- function(x,...){
-<<<<<<< HEAD
-  a <<- as.character(x$dataname)
-  b <<- as.character(x$formula)
+print.linreg <- function(x){
+  a <- as.character(x$dataname)
+  b <- as.character(x$formula)
   printformula <- function(x){
-    
-    return(x$formula)
     
   }
   c <- printformula(x)
-  cat("Call:\n", "linreg(", c )
-  
-  cat( ")",",","data =", a, "\n\n","Coefficients:\n" )
+  # cat("Call:\n", "linreg(", c )
+  # 
+  # cat(")",",","data =", a, "\n","Coefficients:\n")
   
   x$coefficients
   
-=======
   a <- as.character(x$dataname)
   b <- format(x$formula)
-  cat("Call:\n", "linreg(formula = ", b,","," data = ", a, ")","\n\n","Coefficients:\n", sep="" )
-  round(x$coefficients, digits=2)
->>>>>>> e0c65301aa25a8bff975b340939a4eb2e24b57b3
+  cat("Call:")
+  cat("\n")
+  formula_print<- paste0("linreg(formula = ","",b,","," data = ","",a,")","\n","\n","Coefficients:\n", sep=" " )
+  cat(formula_print)
+  round(x$coefficients, digits=3)
 }
 # ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 

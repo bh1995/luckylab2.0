@@ -17,11 +17,8 @@ test_that("class is correct", {
 })
 
 test_that("print() works", {
-<<<<<<< HEAD
 linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-=======
   linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
->>>>>>> e0c65301aa25a8bff975b340939a4eb2e24b57b3
 
   expect_output(print(linreg_mod),"linreg\\(formula = Petal\\.Length ~ Sepal\\.Width \\+ Sepal\\.Length, data = iris\\)")
   expect_output(print(linreg_mod),"( )*\\(Intercept\\)( )*Sepal\\.Width( )*Sepal\\.Length")
