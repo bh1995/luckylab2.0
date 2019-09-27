@@ -55,7 +55,8 @@ linreg <- function(formula, data){
       varb <- solve(t(R)%*%R) * as.numeric(residvar)
       t <- b/sqrt(diag(varb))
       pval <- 1-pt(t,df)
-      return(list(b, fitted, resid, df, residvar, varb, t, pval))
+      bvar <- c(residvar)*diag(solve(t(X)%*%X))
+      return(list(b, fitted, resid, df, residvar, varb, t, pval,bvar))
   }
   
   output <- multreg(Q, R, y)
@@ -67,8 +68,8 @@ linreg <- function(formula, data){
   names(coeff) <- colnames(X)
   
   dataname <- deparse(substitute(data)) #for the print methods
-  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X)
-  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X")
+  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X, output[[9]])
+  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X","bvar")
   class(reg) <<- "linreg" 
   return(reg)
 }
@@ -81,6 +82,25 @@ linreg <- function(formula, data){
 #' @param x An object of class linreg.
 #' @return Summary of calculated values.
 summary <- function(x){UseMethod("summary",x)}
+#' @export
+summary.linreg <- function(x){
+  a <- as.character(x$dataname)
+  format_print <- format(x$formula)
+  cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n", sep="")
+  
+  cat("Coefficients", "Standard Error", "T values", "P values\n")
+  n <- length(x$coefficients)
+  for( i in 1:n){
+    cat(names(x$coefficients)[i], round(x$coefficients[i], digits =3) , 
+                                  round(x$bvar[i], digits = 3),
+                                  round(x$'t-values'[i], digits=3),
+                                  round(x$'p-values'[i], digits =3), "***","\n")
+  }
+  cat("\n")
+  res <- as.vector(x$residuals)
+  dff <- as.vector(x$df)
+  cat("Residual standard error: ", var(res)," on ", dff, " degrees of freedom", sep="" )
+}
 
 
 
@@ -100,8 +120,7 @@ print.linreg <- function(x){
   a <- as.character(x$dataname)
   format_print <- format(x$formula)
  
-   cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
-  
+  cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
   print(x$coefficient)
   
 }
