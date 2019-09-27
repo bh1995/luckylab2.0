@@ -8,6 +8,7 @@ Maintainer: Mecon to <wenwo535@student.liu.se>
 Description: This package handles linear regression models. It is an object oriented system that handles special functions such as print(), plot(), resid(), pred(), coef() and summary().
 License: GPL-3
 RoxygenNote: 6.1.1
+Imports: ggplot2, gridExtra
 Suggests: 
     testthat,
     knitr,
