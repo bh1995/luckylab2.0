@@ -97,24 +97,14 @@ print <- function(x){UseMethod("print",x)}
 #' @export
 print.linreg <- function(x){
   a <- as.character(x$dataname)
-  b <- as.character(x$formula)
-  printformula <- function(x){
-    
-  }
-  c <- printformula(x)
-  # cat("Call:\n", "linreg(", c )
-  # 
-  # cat(")",",","data =", a, "\n","Coefficients:\n")
+  format_print <- format(x$formula)
+ 
+  cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
   
-  x$coefficients
-  
-  a <- as.character(x$dataname)
-  b <- format(x$formula)
-  cat("Call:")
-  cat("\n")
-  formula_print<- paste0("linreg(formula = ","",b,","," data = ","",a,")","\n","\n","Coefficients:\n", sep=" " )
-  cat(formula_print)
-  round(x$coefficients, digits=3)
+  coef_vec <- x$coefficients
+  coef_name <- names(x$coefficients)
+  dd <- structure(coef_vec, .Names = c(coef_name))
+  dd
 }
 # ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 
