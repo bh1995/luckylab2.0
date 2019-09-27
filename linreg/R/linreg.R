@@ -83,6 +83,7 @@ linreg <- function(formula, data){
 summary <- function(x){UseMethod("summary",x)}
 
 
+
 #' Print
 #'
 #' \code{print.linreg} Prints out the coefficients and coefficient names.
@@ -99,12 +100,10 @@ print.linreg <- function(x){
   a <- as.character(x$dataname)
   format_print <- format(x$formula)
  
-  cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
+   cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
   
-  coef_vec <- x$coefficients
-  coef_name <- names(x$coefficients)
-  dd <- structure(coef_vec, .Names = c(coef_name))
-  dd
+  print(x$coefficient)
+  
 }
 # ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 
