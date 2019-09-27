@@ -7,13 +7,13 @@
 resid(x)
 }
 \arguments{
-\item{x}{A class object of Linear Regression}
+\item{x}{An object of class linreg.}
 }
 \value{
-the vector of residuals e
+The vector of residuals e.
 }
 \description{
-\code{resid.linreg} return the vector of residuals e
+\code{resid.linreg} Returns the vector of residuals e
 }
 \details{
 This function returns the vector of residuals e stored in 
