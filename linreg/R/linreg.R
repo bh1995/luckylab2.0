@@ -55,8 +55,7 @@ linreg <- function(formula, data){
       varb <- solve(t(R)%*%R) * as.numeric(residvar)
       t <- b/sqrt(diag(varb))
       pval <- 1-pt(t,df)
-      bvar <- c(residvar)*diag(solve(t(X)%*%X))
-      return(list(b, fitted, resid, df, residvar, varb, t, pval,bvar))
+      return(list(b, fitted, resid, df, residvar, varb, t, pval))
   }
   
   output <- multreg(Q, R, y)
@@ -64,12 +63,10 @@ linreg <- function(formula, data){
 
   coeff <<- c(output[[1]])
   names(coeff) <<- colnames(X)
-  coeff <- c(output[[1]])
-  names(coeff) <- colnames(X)
-  
+  res_error <- sqrt(output[[5]])
   dataname <- deparse(substitute(data)) #for the print methods
-  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X, output[[9]])
-  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X","bvar")
+  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X,res_error)
+  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X", "res_error")
   class(reg) <<- "linreg" 
   return(reg)
 }
@@ -90,16 +87,17 @@ summary.linreg <- function(x){
   
   cat("Coefficients", "Standard Error", "T values", "P values\n")
   n <- length(x$coefficients)
+  bvar <- sqrt(diag(x$varcoef))
   for( i in 1:n){
     cat(names(x$coefficients)[i], round(x$coefficients[i], digits =3) , 
-                                  round(x$bvar[i], digits = 3),
+                                  round(bvar[i], digits = 3),
                                   round(x$'t-values'[i], digits=3),
-                                  round(x$'p-values'[i], digits =3), "***","\n")
+                                  round(x$'p-values'[i], digits = 3), "***","\n")
   }
   cat("\n")
-  res <- as.vector(x$residuals)
+  ress <- as.vector(x$res_error)
   dff <- as.vector(x$df)
-  cat("Residual standard error: ", var(res)," on ", dff, " degrees of freedom", sep="" )
+  cat("Residual standard error: ", ress ," on ", dff, " degrees of freedom", sep="" )
 }
 
 
