@@ -27,6 +27,8 @@ This is a R package of implementing Linear Regression with the methods below:
 :resid
 :summary
 
+The package uses S3 object orientation to implement the above mentioned methods. An object is created by defining a formula that defines a relationship between a dependent variable and the other independent variables, and defining a dataset where the values of these variables are contained (example below). The above mentioned methods can then be used on this object, the methods are discussed below. 
+
 
 ## Let's start
 
