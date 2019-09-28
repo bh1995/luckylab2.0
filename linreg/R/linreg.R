@@ -104,7 +104,7 @@ print.linreg <- function(x){
   # 
   # cat(")",",","data =", a, "\n","Coefficients:\n")
   
-  cat("Call:")
+  #cat("Call:")
   cat("\n")
   # formula_print<- paste0("linreg(formula = ","",b,","," data = ","",a ,")","\n","\n","Coefficients:\n", sep=" " )
   # cat(formula_print)
