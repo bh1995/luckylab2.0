@@ -20,14 +20,33 @@ library(linreg)
 
 ## Linear Regression Package
 This is a R package of implementing Linear Regression with the methods below: 
-:print
-:plot
-:pred
-:coef
-:resid
-:summary
+<br /> 
+
+*
+print
+<br /> 
+
+*
+plot
+<br />
+
+*
+pred
+<br />
+
+*
+coef
+<br />
+
+*
+resid
+<br />
+
+*
+summary
 
 The package uses S3 object orientation to implement the above mentioned methods. An object is created by defining a formula that defines a relationship between a dependent variable and the other independent variables, and defining a dataset where the values of these variables are contained (example below). The above mentioned methods can then be used on this object, the methods are discussed below. 
+
 
 
 ## Let's start
@@ -41,24 +60,60 @@ linreg() and have the two arguments "formula" and "data", e.g. formula =Petal.Le
 
 4. It will be what it looks like:
 
-## print(regmodel)
+```{r, include = TRUE}
+# example object named "test" created using the iris dataset.
+
+test <- linreg(formula = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
+
 ```
-```
-## plot(regmodel)
-```
-```
-## pred(regmodel)
-```
-```
-## coef(regmodel)
-```
-```
-## resid(regmodel)
-```
-```
-## summary(regmodel)
-```
+## print
+The print method will print the coefficients of the solution as shown below.
+
+```{r, include = TRUE}
+# example of using the print method on the object test.
+
+print(test)
+
 ```
 
+## plot
+Using the plot method two plots will be created. One of residuals vs the fitted values and one plot of the scaled residuals vs fitted values.
+```{r, include=TRUE}
+# example of the plot method using test.
+plot(test)
+
+```
+
+## pred
+The pred method will return the the predicted values of the dependent variable.
+```{r, include = TRUE}
+# example of the pred method using test.
+head(pred(test))
+
+```
+
+## coef
+Using the coef method returns the coeficients of the given object.
+```{r, include = TRUE}
+# example of the coef method using test.
+coef(test)
+
+```
+
+## resid
+Using resid, the vector of residuals will be returned.
+```{r, include = TRUE}
+# example of the coef method using test.
+head(resid(test))
+
+```
+
+## summary
+The summary method will return the coeficients, their standard error, t-values and p-values, the estimated residual variance and the degrees of freedom.
+```{r, include = TRUE}
+# example of summary using test.
+summary(test)
+
+```
 
 
