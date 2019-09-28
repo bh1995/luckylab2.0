@@ -7,15 +7,15 @@
 coef(x)
 }
 \arguments{
-\item{x}{A class object of Linear Regression}
+\item{x}{An object of class linreg.}
 }
 \value{
-A coefficients as a named vector
+Coefficients as a named vector.
 }
 \description{
 \code{coef.linreg} Returns the coefficients as a named vector.
 }
 \details{
-This function returns the the coefficients as a named vector stored in 
+This function returns the coefficients as a named vector stored in 
 the object linreg of S3 class.
 }

@@ -9,10 +9,11 @@ linreg <- function(formula, data){
   X <- model.matrix(formula,data)
   y <- data[,all.vars(formula)[1]]
   n <- length(y)
+  
   #QR decomposition
-  QR <<- function(X){
+  QR <- function(X){
     # Empty U matrix
-    U <<- matrix(0,dim(X)[1],dim(X)[2])
+    U <- matrix(0,dim(X)[1],dim(X)[2])
     
     # Fill U matrix
     for (i in 1:(dim(X)[2])){
@@ -26,10 +27,10 @@ linreg <- function(formula, data){
     }
     
     # Calculate the e-values and put them in the Q matrix.
-    Q <<- apply(U, 2, function(x)(x/sqrt((sum(x^2)))))
+    Q <- apply(U, 2, function(x)(x/sqrt((sum(x^2)))))
     
     # Empty R matrix
-    R <<- matrix(0,dim(X)[2],dim(X)[2])
+    R <- matrix(0,dim(X)[2],dim(X)[2])
     
     # Fill R matrix
     for (i in 1:(dim(X)[2])){
@@ -57,7 +58,7 @@ linreg <- function(formula, data){
       return(list(b, fitted, resid, df, residvar, varb, tval, pval))
   }
   
-  output <<- multreg(Q, R, y)
+  output <- multreg(Q, R, y)
   
 
   coeff <<- c(output[[1]])
@@ -72,6 +73,17 @@ linreg <- function(formula, data){
   return(reg)
 }
 
+#' Regression summary
+#'
+#' \code{summary.linreg} Outputs a summary of the calculated results from the regression model.
+#'
+#' @export
+#' @param x An object of class linreg.
+#' @return Summary of calculated values.
+summary <- function(x){UseMethod("summary",x)}
+
+
+
 #' Print
 #'
 #' \code{print.linreg} Prints out the coefficients and coefficient names.
@@ -80,7 +92,7 @@ linreg <- function(formula, data){
 #' the object linreg of S3 class.
 #'
 #' @export
-#' @param x A class object of Linear Regression
+#' @param x An object of class linreg.
 #' @return The coefficients and coefficient names.
 print <- function(x){UseMethod("print",x)}
 #' @export
@@ -98,6 +110,12 @@ print.linreg <- function(x){
   # cat(formula_print)
   # round(x$coefficients, digits=3)
   # x$coefficients
+  format_print <- format(x$formula)
+ 
+   cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
+  
+  print(x$coefficient)
+  
 }
 # ***test <- linreg(formula, iris) <- must enter "iris" instead of "data"***
 
@@ -153,6 +171,62 @@ coef.linreg <- function(x,...){
   return(x$coefficients)
 }
 
+#' Plots
+#'
+#' \code{plot.linreg} Prints residual plots.
+#'
+#' This function plots residual plots.
+#'
+#' @export
+#' @param x An object of class linreg.
+#' @return Residual plots.
+plot <- function(x){UseMethod("plot",x)}
+#' @export
+#' @import ggplot2 gridExtra
+#' 
+plot.linreg <- function(x){
+  # First plot
+  residfit <- function(formula, fitted, resid){
+    a <- as.character(as.expression(formula))
+    out <- tail(order(abs(resid)),3)
+    plot <- ggplot(data=NULL,aes(x=fitted, y=resid)) +
+      geom_point()  +
+      geom_text(aes(fitted[out], resid[out]), label = out, size=3, hjust = 1.2) +
+      stat_summary(fun.y="mean", geom="line", aes(fitted), color = "red") +
+      labs(y = "Residuals", x = paste0("Fitted values \nlinreg(",a,")")) +
+      ggtitle("Residuals vs Fitted") +
+      theme(plot.title = element_text(hjust = 0.5))
+    return(plot)
+  }
+  
+  # Second plot
+  scaleloc <- function(formula, fitted, resid){
+    standardized <- sqrt(abs(resid-mean(resid))/sd(resid))
+    a <- as.character(as.expression(formula))
+    out <- tail(order(abs(resid)),3)
+    plot <- ggplot(data=NULL,aes(x=fitted, y=standardized)) +
+      geom_point()  +
+      geom_text(aes(fitted[out], standardized[out]), label = out, size=3, hjust = 1.2) +
+      stat_summary(fun.y="mean", geom="line", aes(fitted), color = "red") +
+      labs(y = expression(sqrt(abs("Standardized residuals"))), x = paste0("Fitted values \nlinreg(",a,")")) +
+      ggtitle("Scale-Location") +
+      theme(plot.title = element_text(hjust = 0.5))
+    return(plot)
+  }
+  # Combine two graphs into one plot
+  grid.arrange(residfit(formula=x$formula, fitted=x$fitted, resid=x$residuals), 
+               scaleloc(formula=x$formula, fitted=x$fitted, resid=x$residuals), ncol = 2)
+}
+
+
+
+
+
+
+
+
+
+
 
 #' Regression summary
 #'
@@ -165,21 +239,21 @@ summary <- function(x){UseMethod("summary",x)}
 
 #' @export
 summary.linreg <- function(x){
-  printSum <- function(b, bvar, tval, pval, n){
+  printSum <- function(coeff, bvar, tval, pval, n){
     cat(sprintf("Coefficients\t\tSdError\t\tTvalue\t\tPvalue\n"))
-  for (i in 1:n){
+    for (i in 1:n){
+      {
+      cat(sprintf("%-15s\t\t%6.6f\t%6.6f\t%6.6f\n",strtrim(names(coeff[i]),15), output[[6]][i],x$t-values[i],x$p-values[i]))
+    }
+    cat(sprintf("Estimated error variance: %f\n",var(x$resid)))
+    cat(sprintf("Degrees of freedom: %d\n",x$df))
     
-    cat(sprintf("%-15s\t\t%6.6f\t%6.6f\t%6.6f\n",strtrim(names(b[i]),15),bvar[i],tval[i],pval[i]))
   }
-  cat(sprintf("Estimated error variance: %f\n",var(x$resid)))
-  cat(sprintf("Degrees of freedom: %d\n",x$df))
-  
-}
   n <- length(x$coefficients)
   coeff <- x$coefficients
-  bvar <- x$bvar
+  bvar <- x$output[[6]]
   T <- x$tval
   P <- x$pval
-  printSummary(coefficients,bvar,T,pval,n)
+  printSum(coefficients,bvar,T,pval,n)
 }
-
+}

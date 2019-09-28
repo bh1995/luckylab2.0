@@ -7,12 +7,12 @@
 linreg(formula, data)
 }
 \arguments{
-\item{formula}{A formula that containing the variables of given dataframe .}
+\item{formula}{A formula.}
 
-\item{data}{A dataframe.}
+\item{data}{A data frame.}
 }
 \value{
-An linreg object of Linear regression in s3 class.
+An object of class linreg.
 }
 \description{
 Linear Regression.

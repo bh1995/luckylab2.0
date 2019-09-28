@@ -7,15 +7,15 @@
 pred(x)
 }
 \arguments{
-\item{x}{A class object of Linear Regression}
+\item{x}{An object of class linreg.}
 }
 \value{
-A predicted values yhat.
+Predicted values yhat.
 }
 \description{
-\code{pred.linreg} Returns the predicted values yhat
+\code{pred.linreg} Returns the predicted values.
 }
 \details{
-This function returns  the predicted values y stored in 
+This function returns the predicted values stored in 
 the object linreg of S3 class.
 }

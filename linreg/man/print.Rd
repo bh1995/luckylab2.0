@@ -7,13 +7,13 @@
 print(x)
 }
 \arguments{
-\item{x}{A class object of Linear Regression}
+\item{x}{An object of class linreg.}
 }
 \value{
-the coefficients and coefficient names
+The coefficients and coefficient names.
 }
 \description{
-\code{print.linreg} print out the coefficients and coefficient names
+\code{print.linreg} Prints out the coefficients and coefficient names.
 }
 \details{
 This function returns the coefficients and coefficient names stored in 
