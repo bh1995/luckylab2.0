@@ -63,15 +63,14 @@ linreg <- function(formula, data){
 
   coeff <<- c(output[[1]])
   names(coeff) <<- colnames(X)
-  res_error <- sqrt(output[[5]])
+  res_error <- sqrt(output[[5]]) #for summary
   dataname <- deparse(substitute(data)) #for the print methods
-<<<<<<< HEAD
   reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X,res_error)
   names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X", "res_error")
-=======
+
   reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, n)
   names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "n")
->>>>>>> 09fe9222364fcfac67d121779de66e8b772ab6e8
+
   class(reg) <<- "linreg" 
   return(reg)
 }
