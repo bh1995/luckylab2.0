@@ -63,12 +63,14 @@ linreg <- function(formula, data){
 
   coeff <<- c(output[[1]])
   names(coeff) <<- colnames(X)
-  coeff <- c(output[[1]])
-  names(coeff) <- colnames(X)
-  
+  res_error <- sqrt(output[[5]]) #for summary
   dataname <- deparse(substitute(data)) #for the print methods
+  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X,res_error)
+  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X", "res_error")
+
   reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, n)
   names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "n")
+
   class(reg) <<- "linreg" 
   return(reg)
 }
@@ -81,6 +83,26 @@ linreg <- function(formula, data){
 #' @param x An object of class linreg.
 #' @return Summary of calculated values.
 summary <- function(x){UseMethod("summary",x)}
+#' @export
+summary.linreg <- function(x){
+  a <- as.character(x$dataname)
+  format_print <- format(x$formula)
+  cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n", sep="")
+  
+  cat("Coefficients", "Standard Error", "T values", "P values\n")
+  n <- length(x$coefficients)
+  bvar <- sqrt(diag(x$varcoef))
+  for( i in 1:n){
+    cat(names(x$coefficients)[i], round(x$coefficients[i], digits =3) , 
+                                  round(bvar[i], digits = 3),
+                                  round(x$'t-values'[i], digits=3),
+                                  round(x$'p-values'[i], digits = 3), "***","\n")
+  }
+  cat("\n")
+  ress <- as.vector(x$res_error)
+  dff <- as.vector(x$df)
+  cat("Residual standard error: ", ress ," on ", dff, " degrees of freedom", sep="" )
+}
 
 
 
@@ -112,8 +134,7 @@ print.linreg <- function(x){
   # x$coefficients
   format_print <- format(x$formula)
  
-   cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
-  
+  cat("Call:\n", "linreg(formula = ", format_print ,","," data = ","",a,")","\n","\n","Coefficients:\n", sep="")
   print(x$coefficient)
   
 }
