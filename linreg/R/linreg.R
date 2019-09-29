@@ -67,10 +67,6 @@ linreg <- function(formula, data){
   dataname <- deparse(substitute(data)) #for the print methods
   reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, X,res_error)
   names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "X", "res_error")
-
-  reg <<- list(formula, coeff, output[[2]], output[[3]], output[[6]], output[[7]], output[[8]], output[[4]], dataname, n)
-  names(reg) <<- c("formula","coefficients","fitted","residuals","varcoef","t-values","p-values","df", "dataname", "n")
-
   class(reg) <<- "linreg" 
   return(reg)
 }
