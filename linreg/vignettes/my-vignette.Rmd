@@ -51,7 +51,7 @@ The package uses S3 object orientation to implement the above mentioned methods.
 
 ## Let's start
 
-1. Download the package "devtools::install_github ("bh1995/luckylab2.0/linreg")
+1. Download the package "devtools::install_github ("bh1995/luckylab2.0/linreg", build_vignettes = TRUE)
 
 2. The function called
 `<linreg()>` and have the two arguments *"formula"* and *"data"*, e.g. `< formula = Petal.Length~Species>`,`<data(iris) >`
