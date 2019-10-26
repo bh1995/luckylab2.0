@@ -1,0 +1,73 @@
+---
+title: "ridgereg"
+author: "Bjorn_Hansen"
+date: "10/26/2019"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+## Fit linear regression for BostonHousing
+
+First we create the partition for training and test
+
+```{r eval=FALSE}
+data("BostonHousing")
+inTrain <- caret::createDataPartition(y= BostonHousing$crim,
+                           p=0.75,
+                           list=FALSE)
+training <-BostonHousing[ inTrain,]
+testing <- BostonHousing[-inTrain,]
+```
+
+Then we proceed to make the linear regression of the training set
+
+```{r eval=FALSE}
+lin <- caret::train(crim~.,
+                    data = training,
+                     method = "lm",
+                     trControl = trainControl(method = "cv")
+                    )
+```
+
+And Finally we make the linforward regression
+
+```{r eval=FALSE}
+linforward <- caret::train(crim~.,
+                      data = training,
+                      method='leapForward'
+                    )
+```
+
+## Fit ridgereg model for BostonHousing
+
+```{r eval=FALSE}
+try_ridge<-function(X){
+  data("BostonHousing")
+  dat <- X
+  trainIndex <- caret::createDataPartition(dat$age, p = .75,
+                                           list = FALSE,
+                                           times= 1)
+  datTrain <- dat[trainIndex, ]
+  datTest <- dat[-trainIndex, ]
+  res <- c(datTrain, datTest)
+  fitControl <- caret::trainControl(method = "cv",
+                                    number = 10)
+  # Set seq of lambda to test
+  lambdaGrid <- expand.grid(lambda = c(0,.01,.02,.03,.04))
+  ridge <- caret::train(crim~.,
+                        data = datTrain,
+                        method='ridge',
+                        trControl = fitControl,
+                        tuneGrid = lambdaGrid,
+                        preProcess=c('center', 'scale')
+  )
+  predict(ridge$finalModel, type='coef', mode='norm')$coefficients[13,]
+  ridge.pred <- predict(ridge, datTest)
+  avgErrror<-2*sqrt(mean(ridge.pred - datTest$crim)^2)
+  return(ridge)
+}
+```
+
+The result will be seen in the output
